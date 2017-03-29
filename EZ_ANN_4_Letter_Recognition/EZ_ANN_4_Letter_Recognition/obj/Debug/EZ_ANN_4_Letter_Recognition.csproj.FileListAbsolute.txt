@@ -1,0 +1,17 @@
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\bin\Debug\EZ_ANN_4_Letter_Recognition.exe.config
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\bin\Debug\EZ_ANN_4_Letter_Recognition.exe
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\bin\Debug\EZ_ANN_4_Letter_Recognition.pdb
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.csprojResolveAssemblyReference.cache
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.Properties.Resources.resources
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.csproj.GenerateResource.Cache
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.exe
+c:\users\mrybalsky\documents\visual studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.pdb
+C:\Users\MRybalsky\Documents\Visual Studio 2015\Projects\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.mainForm.resources
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\bin\Debug\EZ_ANN_4_Letter_Recognition.exe.config
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\bin\Debug\EZ_ANN_4_Letter_Recognition.exe
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\bin\Debug\EZ_ANN_4_Letter_Recognition.pdb
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.mainForm.resources
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.Properties.Resources.resources
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.csproj.GenerateResource.Cache
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.exe
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.pdb
