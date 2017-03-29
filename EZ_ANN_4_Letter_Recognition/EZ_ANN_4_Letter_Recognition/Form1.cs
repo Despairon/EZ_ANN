@@ -35,11 +35,13 @@ namespace EZ_ANN_4_Letter_Recognition
             NeuralNetwork ann = new NeuralNetwork(1024, 1024, 1024);
             Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
 
-            teacher.teach(ann, 0.01, new double[1024]); //FIXME fixme!!!
-            
             /* this is for debug purposes */
-            if (ann.isBroken || !ann.isSkilled)
-                MessageBox.Show("Sorry, ANN either dumb or broken :(");
+            TeachingSample s = new TeachingSample(1024, 1024);
+
+            teacher.teach(ann, 0.01, new TeachingSample[1] { s }); //FIXME fixme!!!
+            
+            if (ann.isBroken)
+                MessageBox.Show("Sorry, ANN is broken :(");
 
             Bitmap bitmap = new Bitmap(pbLetterImage.Image);
             double[,] values = new double[bitmap.Width , bitmap.Height];
@@ -51,7 +53,6 @@ namespace EZ_ANN_4_Letter_Recognition
                                  && (bitmapPixelColor.G == Color.White.G) 
                                  && (bitmapPixelColor.B == Color.White.B) ? 0 : 1;
                 }
-
             double[] true_values = new double[values.Length];
 
             Buffer.BlockCopy(values, 0, true_values, 0, values.Length);
@@ -83,7 +84,11 @@ namespace EZ_ANN_4_Letter_Recognition
 
             SaveFileDialog saveDlg = new SaveFileDialog();
             saveDlg.ShowDialog();
-            bitmap.Save(saveDlg.FileName);
+            try
+            {
+                bitmap.Save(saveDlg.FileName);
+            }
+            catch (Exception) { }
             /* end of debug purposes */
         }
 

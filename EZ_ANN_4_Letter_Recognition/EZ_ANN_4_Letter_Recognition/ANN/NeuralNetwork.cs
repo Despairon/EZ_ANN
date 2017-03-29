@@ -8,7 +8,6 @@ namespace EZ_ANN_4_Letter_Recognition
         public NeuralNetwork(int input_layer_neurons_count, int hidden_layer_neurons_count, int output_layer_neurons_count)
         {
             isBroken  = false;
-            isSkilled = false;
 
             try
             {
@@ -47,7 +46,6 @@ namespace EZ_ANN_4_Letter_Recognition
         private Neuron[]   output_layer;
 
         public bool isBroken  { get; private set; }
-        public bool isSkilled { get; private set; }
 
         public double[] recognize(double[] input_values)
         {
@@ -76,6 +74,23 @@ namespace EZ_ANN_4_Letter_Recognition
                 return outputs.ToArray();
             }
             catch (Exception)
+            {
+                isBroken = true;
+                return null;
+            }
+        }
+
+        internal List<Neuron[]> getLayersForTeacher(Teacher teacher)
+        {
+            if (teacher.isTeaching)
+            {
+                List<Neuron[]> layers = new List<Neuron[]>();
+                layers.Add(input_layer);
+                layers.Add(hidden_layer);
+                layers.Add(output_layer);
+                return layers;
+            }
+            else
             {
                 isBroken = true;
                 return null;

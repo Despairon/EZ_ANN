@@ -61,7 +61,11 @@ namespace EZ_ANN_4_Letter_Recognition
         {
             SaveFileDialog saveDlg = new SaveFileDialog();
             saveDlg.ShowDialog();
-            drawer.bitmap.Save(saveDlg.FileName);
+            try
+            {
+                drawer.bitmap.Save(saveDlg.FileName);
+            }
+            catch (Exception) { }
         }
 
         private void onImageClear(object sender, EventArgs e)
