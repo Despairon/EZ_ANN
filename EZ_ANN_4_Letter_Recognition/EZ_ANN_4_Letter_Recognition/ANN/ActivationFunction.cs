@@ -36,9 +36,11 @@ namespace Activation_funcs
                 default:
                     break;
             }
+            type = f_type;
         }
         public delegate double CalculateFunc(Range sensitivity, double weight);
         public CalculateFunc calculate;
+        public ActivationFunctionType type;
 
         private static class Methods
         {

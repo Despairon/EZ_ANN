@@ -23,7 +23,7 @@ namespace EZ_ANN_4_Letter_Recognition
                     hidden_layer[i] = new Neuron(new Range(-1, 1), Activation_funcs.ActivationFunctionType.LOGISTIC);
 
                 for (int i = 0; i < output_layer_neurons_count; i++)
-                    output_layer[i] = new OutputNeuron(new Range(0, 0.8f), Activation_funcs.ActivationFunctionType.THRESHOLD);
+                    output_layer[i] = new OutputNeuron(new Range(-1, 1), Activation_funcs.ActivationFunctionType.LOGISTIC);
 
                 foreach (var input_neuron in input_layer)
                     input_neuron.connect(null);

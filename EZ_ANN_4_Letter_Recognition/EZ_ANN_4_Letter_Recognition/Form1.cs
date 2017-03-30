@@ -35,13 +35,15 @@ namespace EZ_ANN_4_Letter_Recognition
             NeuralNetwork ann = new NeuralNetwork(1024, 1024, 1024);
             Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
 
-            /* this is for debug purposes */
             TeachingSample s = new TeachingSample(1024, 1024);
+            s.loadTeachingSampleFromFile();
 
-            teacher.teach(ann, 0.01, new TeachingSample[1] { s }); //FIXME fixme!!!
-            
+            teacher.teach(ann, 0.3, new TeachingSample[1] { s }); //FIXME fixme!!!
+
             if (ann.isBroken)
                 MessageBox.Show("Sorry, ANN is broken :(");
+
+            /* this is for debug purposes */
 
             Bitmap bitmap = new Bitmap(pbLetterImage.Image);
             double[,] values = new double[bitmap.Width , bitmap.Height];

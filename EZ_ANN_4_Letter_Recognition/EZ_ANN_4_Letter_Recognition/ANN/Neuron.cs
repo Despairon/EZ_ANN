@@ -44,7 +44,22 @@ namespace EZ_ANN_4_Letter_Recognition
             synapses.Add(new Synapse(neuron.axon));
         }
 
-        protected class Synapse
+        public Axon getAxonForTeacher(Teacher teacher)
+        {
+            return teacher.isTeaching ? axon : null;
+        }
+
+        public List<Synapse> getSynapsesForTeacher(Teacher teacher)
+        {
+            return teacher.isTeaching ? synapses : null;
+        }
+
+        public ActivationFunctionType getActivationFuncType()
+        {
+            return activationFunc.type;
+        }
+
+        public class Synapse
         {
             public Synapse(Axon axon)
             {
@@ -59,7 +74,7 @@ namespace EZ_ANN_4_Letter_Recognition
             {
                 Random random = new Random();
 
-                weight = random.NextDouble();
+                weight = 1;
 
                 axon = new Axon();
 
@@ -67,15 +82,26 @@ namespace EZ_ANN_4_Letter_Recognition
             }
 
             private double weight;
-            public Axon axon;
+            public Axon axon { get; }
 
             public double getLinearCombination()
             {
                 return weight * axon.value;
             }
+
+            public void recalculateWeightAsTeacher(Teacher teacher, double newWeight)
+            {
+                weight = teacher.isTeaching ? newWeight : weight;
+            }
+
+            public double getWeightAsTeacher(Teacher teacher)
+            {
+                return teacher.isTeaching ? weight : -1;
+            }
+            
         }
 
-        protected class Axon
+        public class Axon
         {
             public Axon()
             {
