@@ -18,7 +18,7 @@ namespace EZ_ANN_4_Letter_Recognition
 
             graphics = Graphics.FromImage(pBox.Image);
 
-            pen = new Pen(Color.Black, 5);
+            pen = new Pen(Color.Black, 3);
             pen.StartCap = LineCap.Round;
             pen.EndCap = LineCap.Round;
 

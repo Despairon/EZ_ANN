@@ -34,6 +34,7 @@ namespace EZ_ANN_4_Letter_Recognition
 
         private void onImageLoad(object sender, EventArgs e)
         {
+            MessageBox.Show("Select image to draw on please...");
             try
             {
                 OpenFileDialog openDlg = new OpenFileDialog();
