@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 namespace EZ_ANN_4_Letter_Recognition
@@ -25,15 +26,36 @@ namespace EZ_ANN_4_Letter_Recognition
                                                 saveToolStripMenuItem,
                                                 clearToolStripMenuItem,
                                                 pbLetterImage);
-            TeachingSample sample = new TeachingSample(2, 2);
+
             OpenFileDialog d = new OpenFileDialog();
             d.ShowDialog();
-            if (!sample.generateTeachingSampleFromFile(d.FileName))
-                MessageBox.Show("Error reading sample from file...");
-            //MessageBox.Show("please wait, neural network is creating...");
 
-            //NeuralNetwork ann = new NeuralNetwork(1024, 1024, 1024);
-            //Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
+            TeachingSample[] samples = TeachingSample.generateTeachingSamplesFromFile(d.FileName);
+
+            if (samples == null)
+            {
+                MessageBox.Show("Error reading sample from file...");
+                return;
+            }
+            
+            MessageBox.Show("please wait, neural network is creating...");
+
+            NeuralNetwork ann = new NeuralNetwork(2, 10, 1);
+            Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
+
+            teacher.teach(ann, 0.5, samples);
+
+            double[] outputs = ann.recognize(new double[] { 0, 0 } );
+
+            string result = "0 | 0 = 1 on " + outputs[0].ToString() + "%";
+
+            MessageBox.Show("ANN thinks that "+ result);
+
+            outputs = ann.recognize(new double[] { 1, 0 });
+
+            result = "1 | 0 = 1 on " + outputs[0].ToString() + "%";
+
+            MessageBox.Show("ANN thinks of " + result);
 
             //TeachingSample[] samples = null;
 

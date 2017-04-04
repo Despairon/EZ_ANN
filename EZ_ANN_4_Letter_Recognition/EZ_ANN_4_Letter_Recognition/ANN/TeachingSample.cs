@@ -31,7 +31,7 @@ namespace EZ_ANN_4_Letter_Recognition
                 for (int y = 0; y < bitmap.Height; y++)
                 {
                     Color bitmapPixelColor = bitmap.GetPixel(x, y);
-                    values[x, y] = (bitmapPixelColor.R == Color.White.R)
+                    values[x, y] =  (bitmapPixelColor.R == Color.White.R)
                                  && (bitmapPixelColor.G == Color.White.G)
                                  && (bitmapPixelColor.B == Color.White.B) ? 0 : 1;
                 }
@@ -49,44 +49,43 @@ namespace EZ_ANN_4_Letter_Recognition
             return true;
         }
 
-        public bool generateTeachingSampleFromFile(string file)
+        public static TeachingSample[] generateTeachingSamplesFromFile(string file)
         {
+
+            List<TeachingSample> samples = new List<TeachingSample>();
+
             try
             {
                 StreamReader reader = File.OpenText(file);
 
                 string current_str;
 
-                int ind = 0;
                 while (!reader.EndOfStream)
                 {
                     current_str = reader.ReadLine();
-                    current_str = current_str.Replace(',','.');
                     string[] values = current_str.Split(':');
 
-                    if (values.Length > 1)
-                    {
-                        string input_values_str = values[0];
-                        string desired_output_str = values[1];
+                    string input_str  = values[0].Trim();
+                    string output_str = values[1].Trim();
 
-                        input_values[ind] = Convert.ToDouble(input_values_str);
-                        desired_outputs[ind] = Convert.ToDouble(desired_output_str);
-                    }
-                    else
-                    {
-                        string desired_output_str = values[1];
-                        desired_outputs[ind] = Convert.ToDouble(desired_output_str);
-                    }
-                    ind++;
+                    string[] input_strs  = input_str.Split(',');
+                    string[] output_strs = output_str.Split(',');
+
+                    TeachingSample sample = new TeachingSample(input_strs.Length, output_strs.Length);
+
+                    foreach (var input in input_strs)
+                        sample.input_values[Array.IndexOf(input_strs, input)] = Convert.ToDouble(input);
+                    foreach (var output in output_strs)
+                        sample.desired_outputs[Array.IndexOf(output_strs, output)] = Convert.ToDouble(output);
+
+                    samples.Add(sample);
                 }
-                if (ind != input_values.Length)
-                    throw new Exception();
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
-            return true;
+            return samples.ToArray();
         }
 
     }

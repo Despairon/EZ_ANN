@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Activation_funcs;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace EZ_ANN_4_Letter_Recognition
 {
@@ -58,11 +60,16 @@ namespace EZ_ANN_4_Letter_Recognition
 
         public class Synapse
         {
-            public Synapse(Axon axon)
+            public Synapse (Axon axon)
             {
-                Random random = new Random();
+                if (!RandomWeightGenerator.isInit)
+                    RandomWeightGenerator.init();
 
-                weight = random.NextDouble();
+                RandomWeightGenerator.start();
+
+                while (RandomWeightGenerator.generationInProgress) { }
+
+                generateRandomWeight();
 
                 this.axon = axon;
             }
@@ -96,6 +103,39 @@ namespace EZ_ANN_4_Letter_Recognition
                 return teacher.isTeaching ? weight : -1;
             }
             
+            private void generateRandomWeight()
+            {
+                Random random = new Random();
+
+                weight = random.NextDouble();
+            }
+
+            private static class RandomWeightGenerator
+            {
+                public static void init()
+                {
+                    delay = new Timer(2);
+                    delay.Enabled = false;
+                    delay.Elapsed += tick;
+                    generationInProgress = false;
+                    isInit = true;
+                }
+                private static Timer delay;
+                public  static bool  generationInProgress { get; private set; }
+                public static bool   isInit { get; private set; } = false;
+
+                public static void start()
+                {
+                    delay.Start();
+                    generationInProgress = true;
+                }
+
+                private static void tick(object sender, ElapsedEventArgs args)
+                {
+                    delay.Stop();
+                    generationInProgress = false;
+                }
+            }
         }
 
         public class Axon
