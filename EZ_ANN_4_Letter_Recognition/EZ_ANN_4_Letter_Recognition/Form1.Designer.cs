@@ -109,8 +109,9 @@
             // recognizeToolStripMenuItem
             // 
             this.recognizeToolStripMenuItem.Name = "recognizeToolStripMenuItem";
-            this.recognizeToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.recognizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.recognizeToolStripMenuItem.Text = "Recognize";
+            this.recognizeToolStripMenuItem.Click += new System.EventHandler(this.recognizeToolStripMenuItem_Click);
             // 
             // mainForm
             // 

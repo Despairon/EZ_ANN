@@ -57,53 +57,54 @@ namespace EZ_ANN_4_Letter_Recognition
 
                 double[] recalculated_weight_for_output_layer = new double[hidden_layer.Length*output_layer.Length];
 
-                for (int iteration = 0; iteration < 5000; iteration++)
+                for (int it = 0; it < 100; it++)
                 {
-                    int ind = 0;
+                
+                int ind = 0;
 
-                    foreach (var neuron in output_layer)
+                foreach (var neuron in output_layer)
+                {
+                    int    index = Array.IndexOf(output_layer, neuron);
+                    double Eout  = (-1.0f) * (teaching_sample.desired_outputs[index] - neuron.getAxonForTeacher(teacher).value);
+                    double d     = Eout * derivative(neuron.getActivationFuncType(), neuron.getAxonForTeacher(teacher));
+
+                    d_out[index] = d;
+
+                    foreach (var synapse in neuron.getSynapsesForTeacher(teacher))
                     {
-                        int index = Array.IndexOf(output_layer, neuron);
-                        double Eout = (-1.0f) * (teaching_sample.desired_outputs[index] - neuron.getAxonForTeacher(teacher).value);
-                        double d = Eout * derivative(neuron.getActivationFuncType(), neuron.getAxonForTeacher(teacher));
+                        double recalculatedWeight = backPropagate(synapse.getWeightAsTeacher(teacher), precision, d, synapse.axon.value);
+                        recalculated_weight_for_output_layer[ind] = recalculatedWeight;
+                        ind++;
+                    }
+                }
 
-                        d_out[index] = d;
+                foreach (var neuron in hidden_layer)
+                {
+                    double d = 0;
 
-                        foreach (var synapse in neuron.getSynapsesForTeacher(teacher))
-                        {
-                            double recalculatedWeight = backPropagate(synapse.getWeightAsTeacher(teacher), precision, d, synapse.axon.value);
-                            recalculated_weight_for_output_layer[ind] = recalculatedWeight;
-                            ind++;
-                        }
+                    foreach (var next_neuron in output_layer)
+                    {
+                        double d_o  = d_out[Array.IndexOf(output_layer, next_neuron)];
+                        double w_ho = next_neuron.getSynapsesForTeacher(teacher).Find(syn => syn.axon == neuron.getAxonForTeacher(teacher)).getWeightAsTeacher(teacher); 
+                        d += d_o * w_ho;
                     }
 
-                    foreach (var neuron in hidden_layer)
+                    d *= derivative(neuron.getActivationFuncType(), neuron.getAxonForTeacher(teacher));
+
+                    foreach (var synapse in neuron.getSynapsesForTeacher(teacher))
                     {
-                        double d = 0;
-
-                        foreach (var next_neuron in output_layer)
-                        {
-                            double d_o = d_out[Array.IndexOf(output_layer, next_neuron)];
-                            double w_ho = next_neuron.getSynapsesForTeacher(teacher).Find(syn => syn.axon == neuron.getAxonForTeacher(teacher)).getWeightAsTeacher(teacher);
-                            d += d_o * w_ho;
-                        }
-
-                        d *= derivative(neuron.getActivationFuncType(), neuron.getAxonForTeacher(teacher));
-
-                        foreach (var synapse in neuron.getSynapsesForTeacher(teacher))
-                        {
-                            double recalculatedWeight = backPropagate(synapse.getWeightAsTeacher(teacher), precision, d, synapse.axon.value);
-                            synapse.recalculateWeightAsTeacher(teacher, recalculatedWeight);
-                        }
+                        double recalculatedWeight = backPropagate(synapse.getWeightAsTeacher(teacher), precision, d, synapse.axon.value);
+                        synapse.recalculateWeightAsTeacher(teacher, recalculatedWeight);
                     }
+                }
 
-                    ind = 0;
-                    foreach (var neuron in output_layer)
-                        foreach (var synapse in neuron.getSynapsesForTeacher(teacher))
-                        {
-                            synapse.recalculateWeightAsTeacher(teacher, recalculated_weight_for_output_layer[ind]);
-                            ind++;
-                        }
+                ind = 0;
+                foreach (var neuron in output_layer)
+                    foreach (var synapse in neuron.getSynapsesForTeacher(teacher))
+                    {
+                        synapse.recalculateWeightAsTeacher(teacher, recalculated_weight_for_output_layer[ind]);
+                        ind++;
+                    }
                 }
             }
 
