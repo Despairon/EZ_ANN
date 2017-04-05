@@ -9,7 +9,7 @@ namespace EZ_ANN_4_Letter_Recognition
         {
             isBroken  = false;
 
-             try
+            try
             {
 
                 input_layer  = new InputNeuron[input_layer_neurons_count];

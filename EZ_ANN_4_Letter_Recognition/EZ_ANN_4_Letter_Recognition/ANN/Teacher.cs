@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Activation_funcs;
-using static EZ_ANN_4_Letter_Recognition.Neuron;
-using System.Windows.Forms;
 
 namespace EZ_ANN_4_Letter_Recognition
 {
@@ -35,8 +32,6 @@ namespace EZ_ANN_4_Letter_Recognition
 
             private static void back_propagation(List<Neuron[]> ann_layers, double precision, TeachingSample teaching_sample, Teacher teacher)
             {
-
-                double average_error = 0;
 
                 Neuron[] input_layer = ann_layers.Find(layer => layer is InputNeuron[]);
                 Neuron[] hidden_layer = ann_layers.Find(layer => !(layer is InputNeuron[]) && !(layer is OutputNeuron[]));
