@@ -62,22 +62,13 @@ namespace EZ_ANN_4_Letter_Recognition
         {
             public Synapse (Axon axon)
             {
-                if (!RandomWeightGenerator.isInit)
-                    RandomWeightGenerator.init();
-
-                RandomWeightGenerator.start();
-
-                while (RandomWeightGenerator.generationInProgress) { }
+                this.axon = axon;
 
                 generateRandomWeight();
-
-                this.axon = axon;
             }
 
             public Synapse()
             {
-                Random random = new Random();
-
                 weight = 1;
 
                 axon = new Axon();
@@ -105,35 +96,20 @@ namespace EZ_ANN_4_Letter_Recognition
             
             private void generateRandomWeight()
             {
-                Random random = new Random();
+                Random random = new Random(RSeed.get);
 
                 weight = random.NextDouble();
             }
 
-            private static class RandomWeightGenerator
+            private static class RSeed
             {
-                public static void init()
+                private static int _seed = 0;
+                public static int get
                 {
-                    delay = new Timer(2);
-                    delay.Enabled = false;
-                    delay.Elapsed += tick;
-                    generationInProgress = false;
-                    isInit = true;
-                }
-                private static Timer delay;
-                public  static bool  generationInProgress { get; private set; }
-                public static bool   isInit { get; private set; } = false;
-
-                public static void start()
-                {
-                    delay.Start();
-                    generationInProgress = true;
-                }
-
-                private static void tick(object sender, ElapsedEventArgs args)
-                {
-                    delay.Stop();
-                    generationInProgress = false;
+                    get
+                    {
+                        return ++_seed;
+                    }
                 }
             }
         }
