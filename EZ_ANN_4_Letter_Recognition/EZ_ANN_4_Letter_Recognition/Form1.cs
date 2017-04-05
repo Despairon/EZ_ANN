@@ -43,7 +43,7 @@ namespace EZ_ANN_4_Letter_Recognition
             NeuralNetwork ann = new NeuralNetwork(2, 5, 1);
             Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
 
-            teacher.teach(ann, 1, samples);
+            teacher.teach(ann, 1, samples, 3000);
 
             string[] result = new string[4];
 
