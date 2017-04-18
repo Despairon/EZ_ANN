@@ -15,6 +15,8 @@ namespace EZ_ANN_4_Letter_Recognition
 
             img = pBox.Image.GetThumbnailImage(pBox.Width, pBox.Height, new Image.GetThumbnailImageAbort(abortImage), System.IntPtr.Zero);
 
+            pBox.Image = img;
+
             graphics = Graphics.FromImage(img);
 
             pen          = new Pen(Color.Black, 10);
@@ -23,7 +25,9 @@ namespace EZ_ANN_4_Letter_Recognition
 
             isDrawing = false;
 
-            bitmap = new Bitmap(img.Width, img.Height, graphics);
+            bitmap = new Bitmap(img.GetThumbnailImage(16,16, new Image.GetThumbnailImageAbort(abortImage), System.IntPtr.Zero));
+            
+            pBox.DrawToBitmap(bitmap, new Rectangle(0,0,bitmap.Width,bitmap.Height));
 
             pBox.MouseDown   += new MouseEventHandler(startDrawing);
             pBox.MouseUp     += new MouseEventHandler(stopDrawing);
@@ -64,9 +68,8 @@ namespace EZ_ANN_4_Letter_Recognition
 
         private void render()
         {
-            Rectangle rect = new Rectangle(0, 0, pBox.Width, pBox.Height);
             pBox.Image = img;
-            pBox.DrawToBitmap(bitmap, rect);
+            bitmap = new Bitmap(img.GetThumbnailImage(16, 16, new Image.GetThumbnailImageAbort(abortImage), System.IntPtr.Zero));
             pBox.Invalidate();
         }
 
