@@ -40,7 +40,7 @@ namespace EZ_ANN_4_Letter_Recognition
 
             //MessageBox.Show("please wait, neural network is creating...");
 
-            //NeuralNetwork ann = new NeuralNetwork(2, 5, 1);
+            //ann = new NeuralNetwork(2, 5, 1);
             //Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
 
             //teacher.teach(ann, 1, samples, 3000);
@@ -65,48 +65,17 @@ namespace EZ_ANN_4_Letter_Recognition
 
             //MessageBox.Show("ANN thinks of: \n" + result[0] + result[1] + result[2] + result[3]);
 
-            NeuralNetwork ann = new NeuralNetwork(1024, 1024, 1024);
+        }
+        private ImageProcessor imageProcessor;
+        private NeuralNetwork ann;
 
-            if (ann.isBroken)
-            {
-                MessageBox.Show("Sorry, ANN is broken :(");
-                return;
-            }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
 
-            Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
-
-            TeachingSample[] samples = null;
-
-            MessageBox.Show("Ann created. Please, choose images to generate teaching samples");
-
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Multiselect = true;
-            dlg.ShowDialog();
-            if (dlg.FileNames.Length > 0)
-            {
-                samples = new TeachingSample[dlg.FileNames.Length];
-                for (int i = 0; i < samples.Length; i++)
-                {
-                    samples[i] = new TeachingSample(1024, 1024);
-                    if (!samples[i].generateTeachingSampleFromImage(dlg.FileNames[i]))
-                    {
-                        MessageBox.Show("one of the files selected is bad");
-                        return;
-                    }
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("No files for teaching sample selected!");
-                return;
-            }
-
-            if (samples != null)
-                teacher.teach(ann, 1, samples, 1);
-            else
-                return;
-
+        private void recognizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             /* this is for debug purposes */
 
             Bitmap bitmap = new Bitmap(pbLetterImage.Image);
@@ -159,7 +128,7 @@ namespace EZ_ANN_4_Letter_Recognition
                         c = Color.White;
                     bitmap.SetPixel(x, y, c);
                 }
-
+            MessageBox.Show("select where to save recreated image");
             SaveFileDialog saveDlg = new SaveFileDialog();
             saveDlg.ShowDialog();
             try
@@ -171,16 +140,62 @@ namespace EZ_ANN_4_Letter_Recognition
 
         }
 
-        private ImageProcessor imageProcessor;
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void teachToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            Teacher teacher = new Teacher(TeachingMethodType.BACK_PROPAGATION);
+
+            TeachingSample[] samples = null;
+
+            MessageBox.Show("Please, choose images to generate teaching samples");
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Multiselect = true;
+            dlg.ShowDialog();
+            if (dlg.FileNames.Length > 0)
+            {
+                samples = new TeachingSample[dlg.FileNames.Length];
+                for (int i = 0; i < samples.Length; i++)
+                {
+                    samples[i] = new TeachingSample(1024, 1024);
+                    if (!samples[i].generateTeachingSampleFromImage(dlg.FileNames[i]))
+                    {
+                        MessageBox.Show("one of the files selected is bad");
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No files for teaching sample selected!");
+                return;
+            }
+
+            if (samples != null)
+            {
+                teacher.teach(ann, 1, samples, 1);
+                MessageBox.Show("Congratulations, ANN is taught!");
+            }
+            else
+                return;
+
+            if (ann.isBroken)
+            {
+                MessageBox.Show("Sorry, ANN is broken :(");
+                return;
+            }
         }
 
-        private void recognizeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ann = new NeuralNetwork(1024, 1024, 1024);
 
+            if (ann.isBroken)
+            {
+                MessageBox.Show("Sorry, ANN is broken :(");
+                return;
+            }
+            else
+                MessageBox.Show("ANN successfully created!");
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using Microsoft.Win32.SafeHandles;
 
 namespace EZ_ANN_4_Letter_Recognition
 {
@@ -16,31 +13,49 @@ namespace EZ_ANN_4_Letter_Recognition
         {
             this.pBox = pBox;
 
-            graphics = Graphics.FromImage(pBox.Image);
+            img = pBox.Image.GetThumbnailImage(pBox.Width, pBox.Height, new Image.GetThumbnailImageAbort(abortImage), System.IntPtr.Zero);
 
-            pen = new Pen(Color.Black, 3);
+            graphics = Graphics.FromImage(img);
+
+            pen          = new Pen(Color.Black, 10);
             pen.StartCap = LineCap.Round;
-            pen.EndCap = LineCap.Round;
+            pen.EndCap   = LineCap.Round;
 
             isDrawing = false;
 
-            bitmap = new Bitmap(pBox.Size.Width, pBox.Size.Height, graphics);
+            bitmap = new Bitmap(img.Width, img.Height, graphics);
 
             pBox.MouseDown   += new MouseEventHandler(startDrawing);
             pBox.MouseUp     += new MouseEventHandler(stopDrawing);
             pBox.MouseMove   += new MouseEventHandler(onDraw);
         }
         private PictureBox pBox;
-        private Graphics graphics;
-        private Pen pen;
-        private Point lastPoint;
-        private bool isDrawing;
-        public Bitmap bitmap { get; private set; }
+        private Graphics   graphics;
+        private Image      img;
+        private Pen        pen;
+        private Point      lastPoint;
+        private bool       isDrawing;
+        public  Bitmap     bitmap { get; private set; }
+
+        private bool abortImage()
+        {
+            return false;
+        }
 
         private void onDraw(object sender, MouseEventArgs e)
         {
             if (isDrawing)
             {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        pen.Color = Color.Black;
+                        break;
+                    case MouseButtons.Right:
+                        pen.Color = Color.White;
+                        break;
+                    default: break;
+                }
                 graphics.DrawLine(pen, lastPoint, e.Location);
                 lastPoint = e.Location;
                 render();
@@ -50,13 +65,14 @@ namespace EZ_ANN_4_Letter_Recognition
         private void render()
         {
             Rectangle rect = new Rectangle(0, 0, pBox.Width, pBox.Height);
+            pBox.Image = img;
             pBox.DrawToBitmap(bitmap, rect);
             pBox.Invalidate();
         }
 
         private void startDrawing(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
                 lastPoint.X = e.X;
                 lastPoint.Y = e.Y;
@@ -66,7 +82,7 @@ namespace EZ_ANN_4_Letter_Recognition
 
         private void stopDrawing(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
                 isDrawing = false;
         }
 

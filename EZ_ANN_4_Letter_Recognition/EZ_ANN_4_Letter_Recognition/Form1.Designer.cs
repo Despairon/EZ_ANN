@@ -37,6 +37,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aNNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recognizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.teachToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbLetterImage)).BeginInit();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
@@ -45,9 +47,10 @@
             // 
             this.pbLetterImage.BackColor = System.Drawing.Color.White;
             this.pbLetterImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbLetterImage.Location = new System.Drawing.Point(239, 133);
+            this.pbLetterImage.Location = new System.Drawing.Point(189, 85);
             this.pbLetterImage.Name = "pbLetterImage";
-            this.pbLetterImage.Size = new System.Drawing.Size(32, 32);
+            this.pbLetterImage.Size = new System.Drawing.Size(256, 256);
+            this.pbLetterImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLetterImage.TabIndex = 0;
             this.pbLetterImage.TabStop = false;
             // 
@@ -101,7 +104,9 @@
             // aNNToolStripMenuItem
             // 
             this.aNNToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.recognizeToolStripMenuItem});
+            this.createToolStripMenuItem,
+            this.recognizeToolStripMenuItem,
+            this.teachToolStripMenuItem});
             this.aNNToolStripMenuItem.Name = "aNNToolStripMenuItem";
             this.aNNToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.aNNToolStripMenuItem.Text = "ANN";
@@ -109,9 +114,23 @@
             // recognizeToolStripMenuItem
             // 
             this.recognizeToolStripMenuItem.Name = "recognizeToolStripMenuItem";
-            this.recognizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.recognizeToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.recognizeToolStripMenuItem.Text = "Recognize";
             this.recognizeToolStripMenuItem.Click += new System.EventHandler(this.recognizeToolStripMenuItem_Click);
+            // 
+            // teachToolStripMenuItem
+            // 
+            this.teachToolStripMenuItem.Name = "teachToolStripMenuItem";
+            this.teachToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.teachToolStripMenuItem.Text = "Teach";
+            this.teachToolStripMenuItem.Click += new System.EventHandler(this.teachToolStripMenuItem_Click);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.createToolStripMenuItem.Text = "Create";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
             // 
             // mainForm
             // 
@@ -142,6 +161,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aNNToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recognizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem teachToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
     }
 }
 

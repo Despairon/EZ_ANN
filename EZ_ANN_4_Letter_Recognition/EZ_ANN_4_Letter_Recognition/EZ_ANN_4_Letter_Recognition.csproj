@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ANN\ActivationFunction.cs" />
+    <Compile Include="ANN\ANN_Manager.cs" />
     <Compile Include="ANN\NeuralNetwork.cs" />
     <Compile Include="ANN\Neuron.cs" />
     <Compile Include="ANN\Teacher.cs" />
