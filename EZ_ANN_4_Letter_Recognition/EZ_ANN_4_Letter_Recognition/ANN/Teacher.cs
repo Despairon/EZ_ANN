@@ -6,11 +6,11 @@ namespace EZ_ANN_4_Letter_Recognition
     public enum TeachingMethodType
     {
         BACK_PROPAGATION,
-        METHODS_MAX
     }
 
     public delegate void Teaching(List<Neuron[]> ann_layers, double learning_rate, TeachingSample teaching_sample, Teacher teacher);
 
+    [Serializable]
     public class Teacher
     {
         public Teacher(TeachingMethodType teachingMethodType)
@@ -22,13 +22,14 @@ namespace EZ_ANN_4_Letter_Recognition
         private Teaching doTeaching;
         public  bool isTeaching { get; private set; }
 
+        [Serializable]
         private class Methods
         {
             public Methods()
             {
                 methods[(int)TeachingMethodType.BACK_PROPAGATION] = new Teaching(back_propagation);
             }
-            private static Teaching[] methods = new Teaching[(int)TeachingMethodType.METHODS_MAX];
+            private static Teaching[] methods = new Teaching[Enum.GetValues(typeof(TeachingMethodType)).Length];
 
             private static void back_propagation(List<Neuron[]> ann_layers, double precision, TeachingSample teaching_sample, Teacher teacher)
             {
@@ -100,23 +101,60 @@ namespace EZ_ANN_4_Letter_Recognition
             }
         }
 
-        public void teach(NeuralNetwork ann, double precision, TeachingSample[] teaching_samples, double iterations)
+        public string teach(NeuralNetwork ann, double precision, TeachingSample[] teaching_samples, int iterations)
         {
+            string teachResult = "";
+
+            DateTime startTime = DateTime.Now;
+
             isTeaching = true;
 
             List<Neuron[]> layers = ann.getLayersForTeacher(this);
 
-            for (int i = 0; i < iterations; i++)
+            try
             {
-                foreach (var sample in teaching_samples)
+                for (int i = 0; i < iterations; i++)
                 {
-                    ann.recognize(sample.input_values);
-                    doTeaching(layers, precision, sample, this);
-                    // TODO: we can use outputs from here to get intermediate teaching iteration results
+                    foreach (var sample in teaching_samples)
+                    {
+                        ann.recognize(sample.input_values);
+                        doTeaching(layers, precision, sample, this);
+                        // TODO: we can use outputs from here to get intermediate teaching iteration results
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                return "error";
             }
 
             isTeaching = false;
+
+            DateTime endTime = DateTime.Now;
+
+            TimeSpan diffTime = endTime - startTime;
+
+            int totalSeconds = diffTime.Seconds + (diffTime.Minutes * 60) + (diffTime.Hours * 3600);
+            int averageSecondsOnIteration = totalSeconds / iterations;
+            int iteration_hours = averageSecondsOnIteration / 3600;
+            int iteration_minutes = averageSecondsOnIteration / 60;
+            int iteration_seconds = averageSecondsOnIteration;
+
+            teachResult = "Total teaching time: "    + string.Format("{0:00}:{1:00}:{2:00}\n", diffTime.Hours, diffTime.Minutes, diffTime.Seconds)
+                        + "Average iteration time: " + string.Format("{0:00}:{1:00}:{2:00}", iteration_hours, iteration_minutes, iteration_seconds);
+
+            return teachResult;
+        }
+
+        public TeachingMethodType getTeachingMethod()
+        {
+            foreach (TeachingMethodType method in Enum.GetValues(typeof(TeachingMethodType)))
+            {
+                if (methods[method] == doTeaching)
+                    return method;
+            }
+
+            return 0;
         }
     }
 }

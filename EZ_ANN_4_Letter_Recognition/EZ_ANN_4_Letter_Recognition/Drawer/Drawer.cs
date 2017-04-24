@@ -1,8 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
-using Microsoft.Win32.SafeHandles;
 
 namespace EZ_ANN_4_Letter_Recognition
 {

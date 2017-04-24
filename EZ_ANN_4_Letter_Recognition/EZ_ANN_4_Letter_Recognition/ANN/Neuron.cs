@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Activation_funcs;
-using System.Threading.Tasks;
-using System.Timers;
 
 namespace EZ_ANN_4_Letter_Recognition
 {
+    [Serializable]
     public class Neuron
     {
         public Neuron(Range sensitivity, ActivationFunctionType f_type)
@@ -58,6 +57,7 @@ namespace EZ_ANN_4_Letter_Recognition
             return activationFunc.type;
         }
 
+        [Serializable]
         public class Synapse
         {
             public Synapse (Axon axon)
@@ -98,7 +98,7 @@ namespace EZ_ANN_4_Letter_Recognition
             {
                 Random random = new Random(RSeed.get);
 
-                weight = random.NextDouble();
+                weight = random.NextDouble() - 0.5f;
             }
 
             private static class RSeed
@@ -114,6 +114,7 @@ namespace EZ_ANN_4_Letter_Recognition
             }
         }
 
+        [Serializable]
         public class Axon
         {
             public Axon()
@@ -124,6 +125,7 @@ namespace EZ_ANN_4_Letter_Recognition
         }
     }
 
+    [Serializable]
     public class InputNeuron : Neuron
     {
         public InputNeuron(Range sensitivity, ActivationFunctionType f_type) : base (sensitivity, f_type)
@@ -144,6 +146,7 @@ namespace EZ_ANN_4_Letter_Recognition
         }
     }
 
+    [Serializable]
     public class OutputNeuron : Neuron
     {
         public OutputNeuron(Range sensitivity, ActivationFunctionType f_type) : base (sensitivity, f_type)

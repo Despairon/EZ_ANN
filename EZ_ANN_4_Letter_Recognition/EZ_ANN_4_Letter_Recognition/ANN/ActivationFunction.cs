@@ -15,6 +15,7 @@ namespace Activation_funcs
         HYPERBOLIC_TANGENT
     }
 
+    [Serializable]
     public class ActivationFunction
     {
         public ActivationFunction(ActivationFunctionType f_type)
@@ -42,6 +43,7 @@ namespace Activation_funcs
         public CalculateFunc calculate;
         public ActivationFunctionType type;
 
+        [Serializable]
         private static class Methods
         {
             public static double calculate_linear(Range sensitivity, double weight)

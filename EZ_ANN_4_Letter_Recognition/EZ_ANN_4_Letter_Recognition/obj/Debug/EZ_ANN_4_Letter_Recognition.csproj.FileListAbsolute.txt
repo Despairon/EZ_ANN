@@ -16,3 +16,4 @@ D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\D
 D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.exe
 D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.pdb
 D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.csprojResolveAssemblyReference.cache
+D:\Personal\EZ_ANN\EZ_ANN_4_Letter_Recognition\EZ_ANN_4_Letter_Recognition\obj\Debug\EZ_ANN_4_Letter_Recognition.ANNManagerDialog.resources

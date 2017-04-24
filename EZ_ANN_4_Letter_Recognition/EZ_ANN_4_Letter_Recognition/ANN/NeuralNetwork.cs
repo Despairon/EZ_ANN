@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EZ_ANN_4_Letter_Recognition
 {
+    [Serializable]
     public class NeuralNetwork
     {
         public NeuralNetwork(int input_layer_neurons_count, int hidden_layer_neurons_count, int output_layer_neurons_count)
@@ -45,7 +46,7 @@ namespace EZ_ANN_4_Letter_Recognition
         private Neuron[]   hidden_layer;
         private Neuron[]   output_layer;
 
-        public bool isBroken  { get; private set; }
+        private bool isBroken;
 
         public double[] recognize(double[] input_values)
         {
@@ -95,6 +96,27 @@ namespace EZ_ANN_4_Letter_Recognition
                 isBroken = true;
                 return null;
             }
+        }
+
+        public struct ANN_info
+        {
+            public ANN_info(bool isBroken, int input_neurons, int hidden_neurons, int output_neurons)
+            {
+                this.isBroken       = isBroken;
+                this.input_neurons  = input_neurons;
+                this.hidden_neurons = hidden_neurons;
+                this.output_neurons = output_neurons;
+            }
+
+            public bool isBroken;
+            public int  input_neurons;
+            public int  hidden_neurons;
+            public int  output_neurons;
+        }
+
+        public ANN_info getANNInfo()
+        {
+            return new ANN_info(isBroken, input_layer.Length, hidden_layer.Length, output_layer.Length);
         }
     }
 }
